@@ -1,4 +1,4 @@
-package com.klim405.mobileapplicationslab
+package com.klim405.mobileapplicationlab
 
 import org.junit.Test
 
