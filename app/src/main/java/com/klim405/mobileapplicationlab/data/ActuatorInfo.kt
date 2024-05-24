@@ -4,6 +4,6 @@ data class ActuatorInfo(
     val id: Int,
     val name: String,
     val statusInfo: String,
-    val status: ActuatorStatus,
+    var status: ActuatorStatus,
     val type: ActuatorType
 )

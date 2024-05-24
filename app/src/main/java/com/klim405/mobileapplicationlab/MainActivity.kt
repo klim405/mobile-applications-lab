@@ -21,22 +21,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MobileApplicationLabTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Column {
-                        Actuator(actuatorInfo = ActuatorInfo(1, "switch 2", "on", ActuatorStatus.ONLINE_ACTIVE, ActuatorType.FAN))
-                        Actuator(actuatorInfo = ActuatorInfo(1, "switch 3", "off", ActuatorStatus.ONLINE_INACTIVE, ActuatorType.FAN))
-                        Actuator(actuatorInfo = ActuatorInfo(1, "switch", "~", ActuatorStatus.OFFLINE, ActuatorType.FAN))
-                        Actuator(actuatorInfo = ActuatorInfo(1, "bulb 2", "on", ActuatorStatus.ONLINE_ACTIVE, ActuatorType.LIGHT_BULB))
-                        Actuator(actuatorInfo = ActuatorInfo(1, "bulb 3", "off", ActuatorStatus.ONLINE_INACTIVE, ActuatorType.LIGHT_BULB))
-                        Actuator(actuatorInfo = ActuatorInfo(1, "bulb", "~", ActuatorStatus.OFFLINE, ActuatorType.LIGHT_BULB))
-                    }
-                }
-            }
+            GreetingPreview()
         }
     }
 }

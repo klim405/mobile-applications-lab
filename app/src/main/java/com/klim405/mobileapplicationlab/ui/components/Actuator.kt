@@ -2,6 +2,7 @@ package com.klim405.mobileapplicationlab.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,6 +13,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -82,24 +87,36 @@ fun ActuatorIcon(actuatorInfo: ActuatorInfo) {
 
 @Composable
 fun Actuator(actuatorInfo: ActuatorInfo) {
+    var actuatorState by remember {
+        mutableStateOf(actuatorInfo.copy())
+    }
     Row (
         modifier = Modifier
+            .clickable(enabled = true) {
+                val act = actuatorState.copy()
+                if (act.status == ActuatorStatus.ONLINE_INACTIVE) {
+                    act.status = ActuatorStatus.ONLINE_ACTIVE
+                } else if (act.status == ActuatorStatus.ONLINE_ACTIVE) {
+                    act.status = ActuatorStatus.ONLINE_INACTIVE
+                }
+                actuatorState = act
+            }
             .clip(RoundedCornerShape(10.dp))
-            .background(if (actuatorInfo.status == ActuatorStatus.ONLINE_ACTIVE) ActiveActuatorColor else InactiveActuatorColor)
+            .background(if (actuatorState.status == ActuatorStatus.ONLINE_ACTIVE) ActiveActuatorColor else InactiveActuatorColor)
             .padding(10.dp)
             .fillMaxWidth()
     ) {
-        ActuatorIcon(actuatorInfo)
+        ActuatorIcon(actuatorState)
         Column (modifier = Modifier.padding(start = 10.dp)) {
             Text(
-                text = actuatorInfo.name,
+                text = actuatorState.name,
                 fontFamily = FontFamily.SansSerif,
                 fontWeight = FontWeight.Bold,
-                color = if (actuatorInfo.status == ActuatorStatus.ONLINE_ACTIVE) ActiveActuatorTextColor else InactiveActuatorTextColor
+                color = if (actuatorState.status == ActuatorStatus.ONLINE_ACTIVE) ActiveActuatorTextColor else InactiveActuatorTextColor
             )
             Text(
-                text = actuatorInfo.statusInfo,
-                color = if (actuatorInfo.status == ActuatorStatus.ONLINE_ACTIVE) ActiveActuatorTextColor else InactiveActuatorTextColor
+                text = actuatorState.statusInfo,
+                color = if (actuatorState.status == ActuatorStatus.ONLINE_ACTIVE) ActiveActuatorTextColor else InactiveActuatorTextColor
             )
         }
     }
